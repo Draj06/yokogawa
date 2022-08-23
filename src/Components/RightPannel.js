@@ -1,50 +1,16 @@
 import React, { useState } from 'react';
-import { useGlobalState } from './Context/CommanCOntext';
+import { useGlobalState, useGlobalDispatch } from './Context/CommanCOntext';
 
-const RightPannel = ({ ChartTitle, CloseRightBar }) => {
+const RightPannel = ({
+	ChartTitle,
+	CloseRightBar,
+	handleSubmit,
+	chartNameForPlaceholder,
+	handleChange,
+	formErrors,
+}) => {
 	const { ActivePannelState, initialCharData } = useGlobalState();
-	const initialValues = { chartName: '' };
-	const [formValues, setFormValues] = useState(initialValues);
-	const [formErrors, setFormErrors] = useState({});
-	const [isLoading, setisLoading] = useState(false);
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setFormValues({ ...formValues, [name]: value });
-	};
-	let chartNameForPlaceholder = initialCharData.map((li) => {
-		return li.ChartName;
-	});
-	console.log(chartNameForPlaceholder.toString().split(',').join('/'));
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		setFormErrors(validate(formValues));
-		setisLoading(true);
-		if (Object.keys(validate(formValues)).length <= 0) {
-			let filterChartname = initialCharData.filter(
-				(li) => li.ChartName === formValues.chartName
-			);
-
-			if (filterChartname.length > 0) {
-				setisLoading(false);
-			} else {
-				setFormErrors(validate('noChartError'));
-			}
-		} else {
-			setisLoading(false);
-		}
-	};
-	const validate = (values) => {
-		const errors = {};
-
-		if (!values.chartName) {
-			errors.chartName = 'Chart name is required!';
-		}
-		if (values === 'noChartError') {
-			errors.chartName = 'The chart name you have typed Doesnot exist';
-		}
-
-		return errors;
-	};
+	const dispatch = useGlobalDispatch();
 
 	return (
 		<div>

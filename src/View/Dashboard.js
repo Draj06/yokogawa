@@ -6,6 +6,8 @@ import {
 	useGlobalState,
 } from '../Components/Context/CommanCOntext';
 
+import RightPannel from '../Components/RightPannel';
+
 // Grid layout
 import { Responsive, WidthProvider } from 'react-grid-layout';
 
@@ -13,8 +15,10 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const Dashboard = (props) => {
 	const { initialCharData } = useGlobalState();
+	const dispatch = useGlobalDispatch();
 	const [layouts, setlayouts] = useState({});
 	const [DOM, setDOM] = useState(null);
+	const [ChartClickData, setChartClickData] = useState(null);
 
 	let compactType = 'vertical';
 
@@ -32,7 +36,12 @@ const Dashboard = (props) => {
 							index={l.i}
 							id={key}
 							className="pt-2  WidgetClass mb-3">
-							<Widgets dataProps={li[l.i]} indProps={l.i} />
+							<Widgets
+								dataProps={li[l.i]}
+								indProps={l.i}
+								ChartClickData={ChartClickData}
+								EditClick={EditClick}
+							/>
 						</div>
 					);
 				});
@@ -71,6 +80,16 @@ const Dashboard = (props) => {
 		setlayouts(layouts);
 	};
 
+	const EditClick = (d) => {
+		setChartClickData(d);
+
+		dispatch({ type: 'SET_TOGGLE_EIDT_PANNEL', payload: true });
+	};
+	const CloseRightBar = () => {
+		dispatch({ type: 'SET_TOGGLE_EIDT_PANNEL', payload: false });
+		setChartClickData(null);
+	};
+
 	return (
 		<div className="px-3 py-2">
 			<div className="row">
@@ -89,6 +108,12 @@ const Dashboard = (props) => {
 					{DOM}
 				</ResponsiveReactGridLayout>
 			</div>
+			{ChartClickData && (
+				<RightPannel
+					ChartTitle={ChartClickData}
+					CloseRightBar={CloseRightBar}
+				/>
+			)}
 		</div>
 	);
 };

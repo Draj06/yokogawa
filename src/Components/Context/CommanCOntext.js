@@ -10,10 +10,15 @@ const GlobalReducer = (state, action) => {
 				...state,
 				ActivePannelState: action.payload,
 			};
-		case 'INITIAL_CHARTDATA':
+		case 'UPDATE_CHART_DATA':
 			return {
 				...state,
 				initialCharData: action.payload,
+			};
+		case 'SIGNLE_WIDGET_DATA':
+			return {
+				...state,
+				WidgetData: action.payload,
 			};
 
 		default:
@@ -24,6 +29,7 @@ const GlobalReducer = (state, action) => {
 export const GlobaldProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(GlobalReducer, {
 		ActivePannelState: null,
+		WidgetData: null,
 		initialCharData: [
 			{
 				ChartTitle: 'Line chart one',
