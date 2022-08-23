@@ -23,6 +23,28 @@ const Dashboard = (props) => {
 	let compactType = 'vertical';
 
 	useEffect(() => {
+		const TwoSecInterval = setInterval(() => {
+			initialCharData.map((li) => {
+				let d = li.ChartData[li.ChartData.length - 1];
+				let splitArray = d.timeStamp.split(':');
+				let plusTwoSec = parseInt(splitArray[1]) + 2;
+				let t = splitArray[0] + ':' + plusTwoSec;
+
+				return {
+					...li,
+					ChartData: li.ChartData.push({
+						timeStamp: t,
+						valueD: Math.floor(Math.random() * 90 + 10),
+					}),
+				};
+			});
+			dispatch({ type: 'UPDATE_CHART_DATA', payload: initialCharData });
+		}, 2000);
+
+		return () => clearInterval(TwoSecInterval);
+	}, [dispatch, initialCharData]);
+
+	useEffect(() => {
 		if (initialCharData !== null && initialCharData.length > 0) {
 			console.log('wwwdata', initialCharData);
 			const generateDOM = (li, key) => {

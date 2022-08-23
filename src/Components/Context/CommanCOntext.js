@@ -37,15 +37,15 @@ export const GlobaldProvider = ({ children }) => {
 				ChartData: [
 					{
 						valueD: 22,
-						timeStamp: '3:30PM 13/08/2022',
+						timeStamp: '11:30',
 					},
 					{
 						valueD: 24,
-						timeStamp: '3:32PM 13/08/2022',
+						timeStamp: '11:32',
 					},
 					{
 						valueD: 24,
-						timeStamp: '3:34PM 13/08/2022',
+						timeStamp: '11:34',
 					},
 				],
 			},
@@ -55,15 +55,15 @@ export const GlobaldProvider = ({ children }) => {
 				ChartData: [
 					{
 						valueD: 32,
-						timeStamp: '4:30PM 13/08/2022',
+						timeStamp: '11:30',
 					},
 					{
 						valueD: 24,
-						timeStamp: '4:32PM 13/08/2022',
+						timeStamp: '11:32',
 					},
 					{
 						valueD: 26,
-						timeStamp: '4:34PM 13/08/2022',
+						timeStamp: '11:34',
 					},
 				],
 			},

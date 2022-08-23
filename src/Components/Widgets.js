@@ -95,7 +95,11 @@ const Widgets = ({ dataProps, liProps }) => {
 			<div className="mt-3">
 				{CDataState &&
 					CDataState.map((lii, ins) => {
-						return <div>{lii.valueD}</div>;
+						return (
+							<div>
+								{lii.valueD}-{lii.timeStamp}
+							</div>
+						);
 					})}
 			</div>
 			{ChartClickData && (
