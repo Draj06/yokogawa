@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useGlobalDispatch, useGlobalState } from './Context/CommanCOntext';
 import RightPannel from './RightPannel';
+import ChartComp from './ChartComp';
 
 const Widgets = ({ dataProps, liProps }) => {
 	const dispatch = useGlobalDispatch();
@@ -36,7 +37,7 @@ const Widgets = ({ dataProps, liProps }) => {
 	useEffect(() => {
 		setCDataState(dataProps.ChartData);
 	}, [dataProps]);
-	console.log();
+	console.log(CDataState);
 	const EditClick = (d) => {
 		setChartClickData(d);
 
@@ -60,16 +61,7 @@ const Widgets = ({ dataProps, liProps }) => {
 				//updating chart as per what user type in input feild
 
 				console.log(filterChartname);
-				// let uData = initialCharData.map((li) => {
-				// 	if (li.ChartName !== filterChartname[0].ChartName) {
-				// 		return {
-				// 			...li,
-				// 			ChartData: filterChartname[0].ChartData,
-				// 		};
-				// 	} else {
-				// 		return li;
-				// 	}
-				// });
+
 				setCDataState(filterChartname[0].ChartData);
 			} else {
 				setFormErrors(validate('noChartError'));
@@ -93,14 +85,7 @@ const Widgets = ({ dataProps, liProps }) => {
 			</div>
 			<hr className="m-0" />
 			<div className="mt-3">
-				{CDataState &&
-					CDataState.map((lii, ins) => {
-						return (
-							<div>
-								{lii.valueD}-{lii.timeStamp}
-							</div>
-						);
-					})}
+				{CDataState && <ChartComp cData={CDataState} />}
 			</div>
 			{ChartClickData && (
 				<RightPannel

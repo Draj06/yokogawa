@@ -176,3 +176,52 @@ label{
 	box-sizing: border-box;
 	cursor: se-resize;
 }
+
+
+/* chart */
+
+.svgimg_container_class {
+	overflow: visible;
+	width: 100%;
+	min-height: 240px;
+	margin-top: 10px;
+	margin-left: 5px;
+	display: block;
+}
+.y-axis .tick line {
+	stroke: #e7e9eb;
+	stroke-width: 1.5;
+}
+
+path.domain {
+	stroke: none;
+}
+.y-axis text {
+	fill: black;
+	font-size: 10px;
+	font-family: 'Quicksand' !important;
+}
+
+.x-axis text {
+	fill: black;
+	font-size: 10px;
+	font-family: 'Quicksand' !important;
+}
+
+.tooltiplinechart
+{
+	background: #f7f7f7;
+	border: 0;
+	box-shadow: 0px 8px 24px -6px rgba(15, 34, 67, 0.16),
+	0px 1px 3px rgba(15, 34, 67, 0.12), 0px 0px 1px rgba(15, 34, 67, 0.16);
+	border-radius: 8px;
+	font-size: 12px;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	pointer-events: none;
+	position: absolute;
+	text-align: left;
+	z-index: 1500;
+}

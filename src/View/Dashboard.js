@@ -33,8 +33,8 @@ const Dashboard = (props) => {
 				return {
 					...li,
 					ChartData: li.ChartData.push({
-						timeStamp: t,
 						valueD: Math.floor(Math.random() * 90 + 10),
+						timeStamp: t,
 					}),
 				};
 			});
@@ -46,9 +46,7 @@ const Dashboard = (props) => {
 
 	useEffect(() => {
 		if (initialCharData !== null && initialCharData.length > 0) {
-			console.log('wwwdata', initialCharData);
 			const generateDOM = (li, key) => {
-				console.log('li has :', li);
 				const layout = generateLayout();
 				return _.map(layout, function (l) {
 					return (
@@ -93,7 +91,7 @@ const Dashboard = (props) => {
 
 	useEffect(() => {
 		const originalLayouts = getFromLS('Layouts', layouts) || {};
-		console.log(originalLayouts);
+
 		setlayouts(originalLayouts);
 	}, [initialCharData]);
 
