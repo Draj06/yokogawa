@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Widgets from '../Components/Widgets';
 import _ from 'lodash';
-import {
-	useGlobalDispatch,
-	useGlobalState,
-} from '../Components/Context/CommanCOntext';
+import { useGlobalDispatch, useGlobalState } from '../Context/CommanCOntext';
 
 import RightPannel from '../Components/RightPannel';
 
@@ -15,14 +12,14 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const Dashboard = (props) => {
 	const { initialCharData } = useGlobalState();
+
 	const dispatch = useGlobalDispatch();
 	const [layouts, setlayouts] = useState({});
 	const [DOM, setDOM] = useState(null);
 	const [ChartClickData, setChartClickData] = useState(null);
 
-	let compactType = 'vertical';
-
 	useEffect(() => {
+		// adding data every two seconds
 		const TwoSecInterval = setInterval(() => {
 			initialCharData.map((li) => {
 				let d = li.ChartData[li.ChartData.length - 1];
@@ -41,13 +38,14 @@ const Dashboard = (props) => {
 			dispatch({ type: 'UPDATE_CHART_DATA', payload: initialCharData });
 		}, 2000);
 
-		return () => clearInterval(TwoSecInterval);
+		return () => clearInterval(TwoSecInterval); // clearing the interval
 	}, [dispatch, initialCharData]);
 
 	useEffect(() => {
+		// here I am using the react-grid-layout for drag drop and resize
 		if (initialCharData !== null && initialCharData.length > 0) {
 			const generateDOM = (li, key) => {
-				const layout = generateLayout();
+				const layout = generateLayout(); // generating layout
 				return _.map(layout, function (l) {
 					return (
 						<div
@@ -67,6 +65,7 @@ const Dashboard = (props) => {
 				});
 			};
 			const generateLayout = () => {
+				// generatting layout -- height, width
 				return (
 					initialCharData !== undefined &&
 					initialCharData !== null &&
@@ -85,7 +84,7 @@ const Dashboard = (props) => {
 					})
 				);
 			};
-			setDOM(generateDOM(initialCharData, 'layouts'));
+			setDOM(generateDOM(initialCharData, 'layouts')); // then setting the DOM so that I can render it
 		}
 	}, [initialCharData]);
 
@@ -96,6 +95,7 @@ const Dashboard = (props) => {
 	}, [initialCharData]);
 
 	const onLayoutChange = (layout, layouts) => {
+		// when we change the layout saing it to local storage as well as setting the layout for local state
 		saveToLS('Layouts', layouts);
 		setlayouts(layouts);
 	};
@@ -113,15 +113,13 @@ const Dashboard = (props) => {
 	return (
 		<div className="px-3 py-2">
 			<div className="row">
-				<ResponsiveReactGridLayout
+				<ResponsiveReactGridLayout // rendring the grid layout
 					{...props}
 					className="layout col-12"
 					layouts={layouts}
 					measureBeforeMount={false}
 					useCSSTransforms={false}
-					compactType={compactType}
 					cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-					preventCollision={!compactType}
 					onLayoutChange={(layout, layouts) => {
 						onLayoutChange(layout, layouts);
 					}}>
@@ -138,6 +136,7 @@ const Dashboard = (props) => {
 	);
 };
 Dashboard.defaultProps = {
+	// some default proprs
 	isDraggable: true,
 	isResizable: true,
 	rowHeight: 60,
@@ -150,10 +149,8 @@ function getFromLS(key) {
 	let ls = {};
 	if (global.localStorage) {
 		try {
-			ls = JSON.parse(global.localStorage.getItem('rgl-8')) || {};
-		} catch (e) {
-			/*Ignore*/
-		}
+			ls = JSON.parse(global.localStorage.getItem('yoko')) || {};
+		} catch (e) {}
 	}
 	return ls[key];
 }
@@ -161,7 +158,7 @@ function getFromLS(key) {
 function saveToLS(key, value) {
 	if (global.localStorage) {
 		global.localStorage.setItem(
-			'rgl-8',
+			'yoko',
 			JSON.stringify({
 				[key]: value,
 			})

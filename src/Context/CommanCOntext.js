@@ -1,9 +1,11 @@
 import React, { createContext, useReducer, useContext } from 'react';
+// Global state using context-api
 
-const GlobalStateStateContext = createContext();
-const GlobalDispatchContext = createContext();
+const GlobalStateStateContext = createContext(); // to get values
+const GlobalDispatchContext = createContext(); // to set values
 
 const GlobalReducer = (state, action) => {
+	// reducer to update value
 	switch (action.type) {
 		case 'SET_TOGGLE_EIDT_PANNEL':
 			return {
@@ -28,6 +30,7 @@ const GlobalReducer = (state, action) => {
 
 export const GlobaldProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(GlobalReducer, {
+		// storing all the values here
 		ActivePannelState: null,
 		WidgetData: null,
 		initialCharData: [

@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import NavBar from './Components/NavBar';
 import Dashboard from './View/Dashboard';
-import { GlobaldProvider } from './Components/Context/CommanCOntext';
+import { GlobaldProvider } from './Context/CommanCOntext';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-grid-layout/css/styles.css';

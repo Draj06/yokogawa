@@ -1,27 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { useGlobalDispatch, useGlobalState } from './Context/CommanCOntext';
+import { useGlobalDispatch, useGlobalState } from '../Context/CommanCOntext';
 import RightPannel from './RightPannel';
 import ChartComp from './ChartComp';
 
+//Widget component to show the widgets
+
 const Widgets = ({ dataProps, liProps }) => {
 	const dispatch = useGlobalDispatch();
-	const { ActivePannelState, initialCharData } = useGlobalState();
+	const { initialCharData } = useGlobalState();
 	const [ChartClickData, setChartClickData] = useState(null);
 	const [CDataState, setCDataState] = useState();
 
-	const initialValues = { chartName: '' };
-	const [formValues, setFormValues] = useState(initialValues);
-	const [formErrors, setFormErrors] = useState({});
-	const [isLoading, setisLoading] = useState(false);
+	const initialValues = { chartName: '' }; // to handle the input fild
+	const [formValues, setFormValues] = useState(initialValues); // to handle the input fild
+	const [formErrors, setFormErrors] = useState({}); // to handle the input fild errors
 	const handleChange = (e) => {
+		// a common handle change
 		const { name, value } = e.target;
 		setFormValues({ ...formValues, [name]: value });
 	};
 	let chartNameForPlaceholder = initialCharData.map((li) => {
+		// getting the chart names to show in placeholder
 		return li.ChartName;
 	});
 
 	const validate = (values) => {
+		// input feild validation
 		const errors = {};
 
 		if (!values.chartName) {
@@ -37,22 +41,23 @@ const Widgets = ({ dataProps, liProps }) => {
 	useEffect(() => {
 		setCDataState(dataProps.ChartData);
 	}, [dataProps]);
-	console.log(CDataState);
+
 	const EditClick = (d) => {
 		setChartClickData(d);
 
-		dispatch({ type: 'SET_TOGGLE_EIDT_PANNEL', payload: true });
+		dispatch({ type: 'SET_TOGGLE_EIDT_PANNEL', payload: true }); //  storing open right pannel state in glocal state
 	};
 	const CloseRightBar = () => {
-		dispatch({ type: 'SET_TOGGLE_EIDT_PANNEL', payload: false });
+		dispatch({ type: 'SET_TOGGLE_EIDT_PANNEL', payload: false }); //  storing open right pannel state in glocal state
 		setChartClickData(null);
 	};
 
 	const handleSubmit = (e) => {
+		// on click of save
 		e.preventDefault();
-		setFormErrors(validate(formValues));
-		setisLoading(true);
+		setFormErrors(validate(formValues)); //checking for validation
 		if (Object.keys(validate(formValues)).length <= 0) {
+			// if no error
 			let filterChartname = initialCharData.filter(
 				(li) => li.ChartName === formValues.chartName
 			);
@@ -60,14 +65,11 @@ const Widgets = ({ dataProps, liProps }) => {
 			if (filterChartname.length > 0) {
 				//updating chart as per what user type in input feild
 
-				console.log(filterChartname);
-
 				setCDataState(filterChartname[0].ChartData);
 			} else {
 				setFormErrors(validate('noChartError'));
 			}
 		} else {
-			setisLoading(false);
 		}
 	};
 

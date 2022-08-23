@@ -25,26 +25,25 @@ const UseResizeObserver = (ref) => {
 };
 
 function ChartComp({ cData }) {
-	const svgRef = useRef();
+	const svgRef = useRef(); // reference for svg to display chart
 	const wrapperRef = useRef();
 	const dimensions = UseResizeObserver(wrapperRef);
-	const [selection, setSelection] = useState([0, 1.5]);
 
 	// will be called initially and on every data change
-	console.log(cData.length);
+
 	useEffect(() => {
 		const svg = select(svgRef.current);
 
 		if (!dimensions) return;
-		const padding = 0.8;
+		const padding = 0.8; // padding between lef and right of container
 		const { height } = dimensions || wrapperRef.current.getBoundingClientRect();
 
 		const xScale = scaleBand()
 			.domain(cData.map(({ timeStamp }) => timeStamp))
-			.range([0, dimensions.width])
+			.range([0, dimensions.width]) // legegends spacing from left
 			.padding(padding);
 
-		const tickWidth = 45;
+		const tickWidth = 45; // this whole code is to calculate the numbers of legends to be shown, if the legends are like 100 than we will show only 70-80 which can be fixed to the screen
 		const width = xScale.range()[1];
 		const tickN = Math.floor(width / tickWidth);
 		const keepEveryNth = Math.ceil(xScale.domain().length / tickN);
@@ -55,11 +54,11 @@ function ChartComp({ cData }) {
 		xScale.domain(xScaleLabelDomain);
 		d3.selectAll('.tooltiplinechart').style('opacity', 0);
 
-		const yScale = scaleLinear()
+		const yScale = scaleLinear() // creating y scale
 			.domain([0, 1.1 * Math.max(...cData.map(({ valueD }) => valueD))])
 			.range([height, 0]);
 
-		const xScaleLines = scaleBand()
+		const xScaleLines = scaleBand() //creating x-scale
 			.domain(cData.map(({ timeStamp }) => timeStamp))
 			.range([0, dimensions.width])
 			.padding(padding);
@@ -85,7 +84,7 @@ function ChartComp({ cData }) {
 			.style('opacity', 0);
 
 		svg
-			.selectAll('.myDot')
+			.selectAll('.myDot') // creating dot circle
 			.data(cData)
 			.join('circle')
 			.style('cursor', 'pointer')
@@ -97,10 +96,10 @@ function ChartComp({ cData }) {
 			.attr('r', 4)
 
 			.on('mousemove', function (event, d) {
+				// Tooltip when user hover over a point to se that data
 				d3.select(this)
 					.transition()
 					.duration('50')
-					// .style("filter", "url(#glow)")
 					.style('fill-opacity', 0.6)
 					.attr('r', '6');
 				div.transition().duration(50).style('opacity', 1);

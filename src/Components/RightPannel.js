@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { useGlobalState, useGlobalDispatch } from './Context/CommanCOntext';
+import React from 'react';
+import { useGlobalState } from '../Context/CommanCOntext';
+
+//Onclick of Edit icon this will open as a right pannel
 
 const RightPannel = ({
 	ChartTitle,
@@ -9,8 +11,7 @@ const RightPannel = ({
 	handleChange,
 	formErrors,
 }) => {
-	const { ActivePannelState, initialCharData } = useGlobalState();
-	const dispatch = useGlobalDispatch();
+	const { ActivePannelState } = useGlobalState();
 
 	return (
 		<div>
@@ -40,7 +41,7 @@ const RightPannel = ({
 									name="chartName"
 									id="chartName"
 									className="form-control"
-									placeholder={`Type - ${chartNameForPlaceholder
+									placeholder={`Type - ${chartNameForPlaceholder // Here showing in placeholder the exsisting chart names
 										.toString()
 										.split(',')
 										.join('/')}`}
